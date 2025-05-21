@@ -1,0 +1,130 @@
+@import 'tailwindcss';
+
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentColor);
+  }
+}
+
+@theme inline {
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+@theme {
+  --color-gray-50: var(--color-neutral-50);
+  --color-gray-100: var(--color-neutral-100);
+  --color-gray-200: var(--color-neutral-200);
+  --color-gray-300: var(--color-neutral-300);
+  --color-gray-400: var(--color-neutral-400);
+  --color-gray-500: var(--color-neutral-500);
+  --color-gray-600: var(--color-neutral-600);
+  --color-gray-700: var(--color-neutral-700);
+  --color-gray-800: var(--color-neutral-800);
+  --color-gray-900: var(--color-neutral-900);
+  --color-gray-950: var(--color-neutral-950);
+
+  --animate-shimmer: shimmer 1.5s infinite;
+
+  @keyframes shimmer {
+    0% {
+      opacity: 0;
+    }
+    30% {
+      opacity: 1;
+    }
+    70% {
+      opacity: 1;
+    }
+    100% {
+      transform: translateX(150%);
+      opacity: 0;
+    }
+  }
+}
+
+@keyframes rerender {
+  0%,
+  40% {
+    border-color: currentColor;
+  }
+}
+
+@keyframes highlight {
+  0%,
+  40% {
+    background: var(--color-blue-600);
+    color: var(--color-blue-100);
+  }
+}
+
+@keyframes loading {
+  0% {
+    opacity: 0.2;
+  }
+  20% {
+    opacity: 1;
+    transform: translateX(1px);
+  }
+  100% {
+    opacity: 0.2;
+  }
+}
+
+.spinner {
+  background: conic-gradient(transparent 10deg, white, transparent 320deg);
+
+  /* Mask to create a hollow center 🍩 */
+  --border-size: 3px;
+  mask-image: radial-gradient(
+    closest-side,
+    transparent calc(100% - var(--border-size)),
+    white calc(100% - var(--border-size))
+  );
+
+  /* Animation:
+     - opacity: render invisible and use animations to reveal spinner
+     - fade: fade in after delay to prevent flashes of UI on fast navigations 
+     - rotate: rotate indefinitely while rendered */
+  opacity: 0;
+  animation:
+    fade 500ms 150ms forwards,
+    rotate 1s linear infinite;
+}
+
+@keyframes rotate {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.transition-enter {
+  opacity: 1;
+  transform: scale(1);
+  transition:
+    opacity 0.5s,
+    transform 0.5s;
+
+  @starting-style {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+}
+
+@plugin "@tailwindcss/forms";
+@plugin "@tailwindcss/typography";
+
+@keyframes fade {
+  from {
+    filter: blur(3px);
+    opacity: 0;
+  }
+  to {
+    filter: blur(0);
+    opacity: 1;
+  }
+}
